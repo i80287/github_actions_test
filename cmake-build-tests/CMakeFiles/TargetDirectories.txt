@@ -1,5 +1,0 @@
-/mnt/E-1.5/projects/c++/github_actions_test/cmake-build-tests/CMakeFiles/target_cxx_17_test.dir
-/mnt/E-1.5/projects/c++/github_actions_test/cmake-build-tests/CMakeFiles/target_cxx_20_test.dir
-/mnt/E-1.5/projects/c++/github_actions_test/cmake-build-tests/CMakeFiles/test.dir
-/mnt/E-1.5/projects/c++/github_actions_test/cmake-build-tests/CMakeFiles/edit_cache.dir
-/mnt/E-1.5/projects/c++/github_actions_test/cmake-build-tests/CMakeFiles/rebuild_cache.dir
