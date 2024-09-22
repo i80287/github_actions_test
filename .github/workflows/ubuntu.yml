@@ -26,9 +26,9 @@ jobs:
         sudo apt install gcc g++ build-essential cmake make libgmp-dev libmpfr-dev
     - name: Compile and run simple program
       run: |
-        g++ test.cpp -std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -o test_cxx17.out
+        g++ test.cpp -std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -lpthread -o test_cxx17.out
         ./test_cxx17.out
-        g++ test.cpp -std=c++20 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -o test_cxx20.out
+        g++ test.cpp -std=c++20 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -lpthread -o test_cxx20.out
         ./test_cxx20.out
 
   ubuntu-cmake-clang:
@@ -47,9 +47,9 @@ jobs:
         sudo apt install clang llvm cmake make libgmp-dev libmpfr-dev
     - name: Compile and run simple program
       run: |
-        clang++ test.cpp -std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -o test_cxx17.out
+        clang++ test.cpp -std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -lpthread -o test_cxx17.out
         ./test_cxx17.out
-        clang++ test.cpp -std=c++20 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -o test_cxx20.out
+        clang++ test.cpp -std=c++20 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -lpthread -o test_cxx20.out
         ./test_cxx20.out
 
   ubuntu-cmake-gcc-mingw-w64-i686-posix:
