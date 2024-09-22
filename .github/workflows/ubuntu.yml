@@ -1,0 +1,77 @@
+name: Ubuntu
+
+on: [push, pull_request, workflow_dispatch]
+
+permissions:
+    contents: read
+
+env:
+    UBSAN_OPTIONS: print_stacktrace=1
+
+jobs:
+
+  ubuntu-cmake-gcc:
+    name: test-on-ubuntu-${{ matrix.ubuntu_version }}
+    runs-on: ubuntu-${{ matrix.ubuntu_version }}
+    strategy:
+      fail-fast: true
+      matrix:
+        ubuntu_version: [22.04]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install g++ build-essential cmake make libgmp-dev libmpfr-dev
+        sudo apt upgrade
+
+  ubuntu-cmake-clang:
+    name: test-on-ubuntu-${{ matrix.ubuntu_version }}
+    runs-on: ubuntu-${{ matrix.ubuntu_version }}
+    strategy:
+      fail-fast: true
+      matrix:
+        ubuntu_version: [22.04]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install clang llvm cmake make libgmp-dev libmpfr-dev
+        sudo apt upgrade
+
+  ubuntu-cmake-gcc-mingw-w64-i686-posix:
+    name: test-on-ubuntu-${{ matrix.ubuntu_version }}
+    runs-on: ubuntu-${{ matrix.ubuntu_version }}
+    strategy:
+      fail-fast: true
+      matrix:
+        ubuntu_version: [22.04]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install dependencies
+      run: |
+        sudo dpkg --add-architecture i386
+        sudo apt update
+        sudo apt install -y --install-recommends gcc-mingw-w64 gcc-mingw-w64-x86-64-posix gcc-mingw-w64-x86-64-posix g++-mingw-w64 g++-mingw-w64-x86-64-posix mingw-w64 mingw-w64-common mingw-w64-tools mingw-w64-x86-64-dev gcc-mingw-w64-i686 gcc-mingw-w64-i686-posix gcc-mingw-w64-i686-posix-runtime wine
+        sudo apt upgrade
+
+  ubuntu-cmake-gcc-mingw-w64-x86_64-posix:
+    name: test-on-ubuntu-${{ matrix.ubuntu_version }}
+    runs-on: ubuntu-${{ matrix.ubuntu_version }}
+    strategy:
+      fail-fast: true
+      matrix:
+        ubuntu_version: [22.04]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install dependencies
+      run: |
+        sudo dpkg --add-architecture i386
+        sudo apt update
+        sudo apt install -y --install-recommends gcc-mingw-w64 gcc-mingw-w64-x86-64-posix gcc-mingw-w64-x86-64-posix g++-mingw-w64 g++-mingw-w64-x86-64-posix mingw-w64 mingw-w64-common mingw-w64-tools mingw-w64-x86-64-dev wine
+        sudo apt upgrade
