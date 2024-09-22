@@ -1,0 +1,1 @@
+/usr/bin/x86_64-w64-mingw32-g++-posix -static -static-libgcc -static-libstdc++ CMakeFiles/target_cxx_20_test.dir/test.cpp.o -o target_cxx_20_test 

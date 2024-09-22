@@ -1,0 +1,137 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-3.28/Modules/CMakeDetermineSystem.cmake:233 (message)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      The system is: Linux - 6.8.0-45-generic - x86_64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake-3.28/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: /usr/bin/x86_64-w64-mingw32-g++-posix 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.exe"
+      
+      The CXX compiler identification is GNU, found in:
+        /mnt/E-1.5/projects/c++/github_actions_test/cmake-build-tests/CMakeFiles/3.28.3/CompilerIdCXX/a.exe
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "/usr/share/cmake-3.28/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "/mnt/E-1.5/projects/c++/github_actions_test/cmake-build-tests/CMakeFiles/CMakeScratch/TryCompile-oWK1WY"
+      binary: "/mnt/E-1.5/projects/c++/github_actions_test/cmake-build-tests/CMakeFiles/CMakeScratch/TryCompile-oWK1WY"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/mnt/E-1.5/projects/c++/github_actions_test/cmake-build-tests/CMakeFiles/CMakeScratch/TryCompile-oWK1WY'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_c7032/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_c7032.dir/build.make CMakeFiles/cmTC_c7032.dir/build
+        gmake[1]: Entering directory '/mnt/E-1.5/projects/c++/github_actions_test/cmake-build-tests/CMakeFiles/CMakeScratch/TryCompile-oWK1WY'
+        Building CXX object CMakeFiles/cmTC_c7032.dir/CMakeCXXCompilerABI.cpp.o
+        /usr/bin/x86_64-w64-mingw32-g++-posix   -v -o CMakeFiles/cmTC_c7032.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/x86_64-w64-mingw32-g++-posix
+        Target: x86_64-w64-mingw32
+        Configured with: ../../src/configure --build=x86_64-linux-gnu --prefix=/usr --includedir='/usr/include' --mandir='/usr/share/man' --infodir='/usr/share/info' --sysconfdir=/etc --localstatedir=/var --disable-option-checking --disable-silent-rules --libdir='/usr/lib/x86_64-linux-gnu' --libexecdir='/usr/lib/x86_64-linux-gnu' --disable-maintainer-mode --disable-dependency-tracking --prefix=/usr --enable-shared --enable-static --disable-multilib --with-system-zlib --libexecdir=/usr/lib --without-included-gettext --libdir=/usr/lib --enable-libstdcxx-time=yes --with-tune=generic --with-headers --enable-version-specific-runtime-libs --enable-fully-dynamic-string --enable-libgomp --enable-languages=c,c++,fortran,objc,obj-c++,ada --enable-lto --enable-threads=posix --program-suffix=-posix --program-prefix=x86_64-w64-mingw32- --target=x86_64-w64-mingw32 --with-as=/usr/bin/x86_64-w64-mingw32-as --with-ld=/usr/bin/x86_64-w64-mingw32-ld --enable-libatomic --enable-libstdcxx-filesystem-ts=yes --enable-dependency-tracking SED=/bin/sed
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 13-posix (GCC) 
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c7032.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_c7032.dir/'
+         /usr/lib/gcc/x86_64-w64-mingw32/13-posix/cc1plus -quiet -v -D_REENTRANT /usr/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_c7032.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/cc0Wxole.s
+        GNU C++17 (GCC) version 13-posix (x86_64-w64-mingw32)
+        	compiled by GNU C version 13.2.0, GMP version 6.3.0, MPFR version 4.2.1, MPC version 1.3.1, isl version isl-0.26-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/sys-include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++
+         /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/x86_64-w64-mingw32
+         /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/backward
+         /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include
+         /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include-fixed
+         /usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/include
+        End of search list.
+        Compiler executable checksum: 425d1830ee362e3b4145b7d0ceaf5889
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c7032.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_c7032.dir/'
+         /usr/bin/x86_64-w64-mingw32-as -v -o CMakeFiles/cmTC_c7032.dir/CMakeCXXCompilerABI.cpp.o /tmp/cc0Wxole.s
+        GNU assembler version 2.41.90 (x86_64-w64-mingw32) using BFD version (GNU Binutils) 2.41.90.20240122
+        COMPILER_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/bin/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c7032.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_c7032.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_c7032
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c7032.dir/link.txt --verbose=1
+        /usr/bin/x86_64-w64-mingw32-g++-posix  -v CMakeFiles/cmTC_c7032.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_c7032 
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/x86_64-w64-mingw32-g++-posix
+        COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/lto-wrapper
+        Target: x86_64-w64-mingw32
+        Configured with: ../../src/configure --build=x86_64-linux-gnu --prefix=/usr --includedir='/usr/include' --mandir='/usr/share/man' --infodir='/usr/share/info' --sysconfdir=/etc --localstatedir=/var --disable-option-checking --disable-silent-rules --libdir='/usr/lib/x86_64-linux-gnu' --libexecdir='/usr/lib/x86_64-linux-gnu' --disable-maintainer-mode --disable-dependency-tracking --prefix=/usr --enable-shared --enable-static --disable-multilib --with-system-zlib --libexecdir=/usr/lib --without-included-gettext --libdir=/usr/lib --enable-libstdcxx-time=yes --with-tune=generic --with-headers --enable-version-specific-runtime-libs --enable-fully-dynamic-string --enable-libgomp --enable-languages=c,c++,fortran,objc,obj-c++,ada --enable-lto --enable-threads=posix --program-suffix=-posix --program-prefix=x86_64-w64-mingw32- --target=x86_64-w64-mingw32 --with-as=/usr/bin/x86_64-w64-mingw32-as --with-ld=/usr/bin/x86_64-w64-mingw32-ld --enable-libatomic --enable-libstdcxx-filesystem-ts=yes --enable-dependency-tracking SED=/bin/sed
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 13-posix (GCC) 
+        COMPILER_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/bin/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_c7032.exe' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_c7032.'
+         /usr/lib/gcc/x86_64-w64-mingw32/13-posix/collect2 -plugin /usr/lib/gcc/x86_64-w64-mingw32/13-posix/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/lto-wrapper -plugin-opt=-fresolution=/tmp/cc6h37q9.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -m i386pep -Bdynamic -o cmTC_c7032.exe /usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib/crt2.o /usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtbegin.o -L/usr/lib/gcc/x86_64-w64-mingw32/13-posix -L/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib CMakeFiles/cmTC_c7032.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lkernel32 -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lkernel32 /usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtend.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_c7032.exe' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_c7032.'
+        gmake[1]: Leaving directory '/mnt/E-1.5/projects/c++/github_actions_test/cmake-build-tests/CMakeFiles/CMakeScratch/TryCompile-oWK1WY'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-3.28/Modules/CMakeTestCXXCompiler.cmake:49 (try_compile)"
+      - "CMakeLists.txt:3 (project)"
+    checks:
+      - "Check for working CXX compiler: /usr/bin/x86_64-w64-mingw32-g++-posix"
+    directories:
+      source: "/mnt/E-1.5/projects/c++/github_actions_test/cmake-build-tests/CMakeFiles/CMakeScratch/TryCompile-BMXAVK"
+      binary: "/mnt/E-1.5/projects/c++/github_actions_test/cmake-build-tests/CMakeFiles/CMakeScratch/TryCompile-BMXAVK"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_CXX_COMPILER_WORKS"
+      cached: true
+      stdout: |
+        Change Dir: '/mnt/E-1.5/projects/c++/github_actions_test/cmake-build-tests/CMakeFiles/CMakeScratch/TryCompile-BMXAVK'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_775f9/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_775f9.dir/build.make CMakeFiles/cmTC_775f9.dir/build
+        gmake[1]: Entering directory '/mnt/E-1.5/projects/c++/github_actions_test/cmake-build-tests/CMakeFiles/CMakeScratch/TryCompile-BMXAVK'
+        Building CXX object CMakeFiles/cmTC_775f9.dir/testCXXCompiler.cxx.o
+        /usr/bin/x86_64-w64-mingw32-g++-posix    -o CMakeFiles/cmTC_775f9.dir/testCXXCompiler.cxx.o -c /mnt/E-1.5/projects/c++/github_actions_test/cmake-build-tests/CMakeFiles/CMakeScratch/TryCompile-BMXAVK/testCXXCompiler.cxx
+        Linking CXX executable cmTC_775f9
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_775f9.dir/link.txt --verbose=1
+        /usr/bin/x86_64-w64-mingw32-g++-posix CMakeFiles/cmTC_775f9.dir/testCXXCompiler.cxx.o -o cmTC_775f9 
+        gmake[1]: Leaving directory '/mnt/E-1.5/projects/c++/github_actions_test/cmake-build-tests/CMakeFiles/CMakeScratch/TryCompile-BMXAVK'
+        
+      exitCode: 0
+...

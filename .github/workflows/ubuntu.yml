@@ -43,6 +43,13 @@ jobs:
         g++ test.cpp -std=c++20 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -lpthread -o test_cxx20.out
         ./test_cxx20.out
 
+    - name: Run cmake
+      run: |
+        mkdir -p cmake-build-tests && cd cmake-build-tests
+        cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo -D CMAKE_C_COMPILER=gcc -D CMAKE_CXX_COMPILER=g++ -S .. -B . && \
+          make all --jobs "$(nproc)" && \
+          env CTEST_OUTPUT_ON_FAILURE=1 make test
+
   ubuntu-cmake-clang:
     name: test-on-ubuntu-${{ matrix.ubuntu_version }}
     runs-on: ubuntu-${{ matrix.ubuntu_version }}
@@ -76,6 +83,14 @@ jobs:
         clang++ test.cpp -std=c++20 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -lpthread -o test_cxx20.out
         ./test_cxx20.out
 
+    - name: Run cmake
+      run: |
+        mkdir -p cmake-build-tests && cd cmake-build-tests
+        cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo -D CMAKE_C_COMPILER=clang -D CMAKE_CXX_COMPILER=clang++ -S .. -B . && \
+          make all --jobs "$(nproc)" && \
+          env CTEST_OUTPUT_ON_FAILURE=1 make test
+
+
   ubuntu-cmake-gcc-mingw-w64-i686-posix:
     name: test-on-ubuntu-${{ matrix.ubuntu_version }}
     runs-on: ubuntu-${{ matrix.ubuntu_version }}
@@ -103,6 +118,13 @@ jobs:
         wine test_cxx17.exe
         i686-w64-mingw32-g++-posix -std=c++20 test.cpp -O2 -Wall -Wextra -Wpedantic -Werror -static -o test_cxx20.exe
         wine test_cxx20.exe
+
+    - name: Run cmake
+      run: |
+        mkdir -p cmake-build-tests && cd cmake-build-tests
+        cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo -D CMAKE_C_COMPILER=i686-w64-mingw32-gcc-posix -D CMAKE_CXX_COMPILER=i686-w64-mingw32-g++-posix -S .. -B . && \
+          make all --jobs "$(nproc)" && \
+          env CTEST_OUTPUT_ON_FAILURE=1 make test
 
 
   ubuntu-cmake-gcc-mingw-w64-x86_64-posix:
@@ -132,3 +154,10 @@ jobs:
         wine test_cxx17.exe
         x86_64-w64-mingw32-g++-posix -std=c++20 test.cpp -O2 -Wall -Wextra -Wpedantic -Werror -static -o test_cxx20.exe
         wine test_cxx20.exe
+
+    - name: Run cmake
+      run: |
+        mkdir -p cmake-build-tests && cd cmake-build-tests
+        cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo -D CMAKE_C_COMPILER=x86_64-w64-mingw32-gcc-posix -D CMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++-posix -S .. -B . && \
+          make all --jobs "$(nproc)" && \
+          env CTEST_OUTPUT_ON_FAILURE=1 make test
