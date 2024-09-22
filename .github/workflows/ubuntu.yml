@@ -23,8 +23,13 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt update
-        sudo apt install g++ build-essential cmake make libgmp-dev libmpfr-dev
-        sudo apt upgrade
+        sudo apt install gcc g++ build-essential cmake make libgmp-dev libmpfr-dev
+    - name: Compile and run simple program
+      run: |
+        g++ test.cpp -std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -o test_cxx17.out
+        ./test_cxx17.out
+        g++ test.cpp -std=c++20 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -o test_cxx20.out
+        ./test_cxx20.out
 
   ubuntu-cmake-clang:
     name: test-on-ubuntu-${{ matrix.ubuntu_version }}
@@ -40,7 +45,12 @@ jobs:
       run: |
         sudo apt update
         sudo apt install clang llvm cmake make libgmp-dev libmpfr-dev
-        sudo apt upgrade
+    - name: Compile and run simple program
+      run: |
+        clang++ test.cpp -std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -o test_cxx17.out
+        ./test_cxx17.out
+        clang++ test.cpp -std=c++20 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -o test_cxx20.out
+        ./test_cxx20.out
 
   ubuntu-cmake-gcc-mingw-w64-i686-posix:
     name: test-on-ubuntu-${{ matrix.ubuntu_version }}
@@ -48,7 +58,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        ubuntu_version: [20.04, 22.04, 24.04]
+        ubuntu_version: [22.04, 24.04]
 
     steps:
     - uses: actions/checkout@v3
@@ -56,8 +66,19 @@ jobs:
       run: |
         sudo dpkg --add-architecture i386
         sudo apt update
-        sudo apt install -y --install-recommends gcc-mingw-w64 gcc-mingw-w64-x86-64-posix gcc-mingw-w64-x86-64-posix g++-mingw-w64 g++-mingw-w64-x86-64-posix mingw-w64 mingw-w64-common mingw-w64-tools mingw-w64-x86-64-dev gcc-mingw-w64-i686 gcc-mingw-w64-i686-posix gcc-mingw-w64-i686-posix-runtime wine
+        sudo apt install -y \
+          gcc-mingw-w64 gcc-mingw-w64-i686 gcc-mingw-w64-i686-posix gcc-mingw-w64-i686-posix-runtime \
+          g++-mingw-w64 g++-mingw-w64-i686 g++-mingw-w64-i686-posix \
+          mingw-w64 mingw-w64-common mingw-w64-tools mingw-w64-i686-dev \
+          wine
         sudo apt upgrade
+    - name: Compile and run simple program
+      run: |
+        i686-w64-mingw32-g++-posix -std=c++17 test.cpp -O2 -Wall -Wextra -Wpedantic -Werror -static -o test_cxx17.exe
+        wine test_cxx17.exe
+        i686-w64-mingw32-g++-posix -std=c++20 test.cpp -O2 -Wall -Wextra -Wpedantic -Werror -static -o test_cxx20.exe
+        wine test_cxx20.exe
+
 
   ubuntu-cmake-gcc-mingw-w64-x86_64-posix:
     name: test-on-ubuntu-${{ matrix.ubuntu_version }}
@@ -65,7 +86,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        ubuntu_version: [20.04, 22.04, 24.04]
+        ubuntu_version: [22.04, 24.04]
 
     steps:
     - uses: actions/checkout@v3
@@ -73,5 +94,15 @@ jobs:
       run: |
         sudo dpkg --add-architecture i386
         sudo apt update
-        sudo apt install -y --install-recommends gcc-mingw-w64 gcc-mingw-w64-x86-64-posix gcc-mingw-w64-x86-64-posix g++-mingw-w64 g++-mingw-w64-x86-64-posix mingw-w64 mingw-w64-common mingw-w64-tools mingw-w64-x86-64-dev wine
+        sudo apt install -y \
+          gcc-mingw-w64 gcc-mingw-w64-x86-64-posix gcc-mingw-w64-x86-64-posix-runtime \
+          g++-mingw-w64 g++-mingw-w64-x86-64-posix g++-mingw-w64-x86-64-posix-runtime \
+          mingw-w64 mingw-w64-common mingw-w64-tools mingw-w64-x86-64-dev \
+          wine
         sudo apt upgrade
+    - name: Compile and run simple program
+      run: |
+        x86_64-w64-mingw32-g++-posix -std=c++17 test.cpp -O2 -Wall -Wextra -Wpedantic -Werror -static -o test_cxx17.exe
+        wine test_cxx17.exe
+        x86_64-w64-mingw32-g++-posix -std=c++20 test.cpp -O2 -Wall -Wextra -Wpedantic -Werror -static -o test_cxx20.exe
+        wine test_cxx20.exe
