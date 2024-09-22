@@ -86,6 +86,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
     - name: Install dependencies
       run: |
         sudo dpkg --add-architecture i386
@@ -94,8 +95,8 @@ jobs:
           gcc-mingw-w64 gcc-mingw-w64-i686 gcc-mingw-w64-i686-posix gcc-mingw-w64-i686-posix-runtime \
           g++-mingw-w64 g++-mingw-w64-i686 g++-mingw-w64-i686-posix \
           mingw-w64 mingw-w64-common mingw-w64-tools mingw-w64-i686-dev \
-          wine
-        sudo apt upgrade
+          cmake make wine
+
     - name: Compile and run simple program
       run: |
         i686-w64-mingw32-g++-posix -std=c++17 test.cpp -O2 -Wall -Wextra -Wpedantic -Werror -static -o test_cxx17.exe
@@ -114,6 +115,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
     - name: Install dependencies
       run: |
         sudo dpkg --add-architecture i386
@@ -122,8 +124,8 @@ jobs:
           gcc-mingw-w64 gcc-mingw-w64-x86-64-posix gcc-mingw-w64-x86-64-posix-runtime \
           g++-mingw-w64 g++-mingw-w64-x86-64-posix \
           mingw-w64 mingw-w64-common mingw-w64-tools mingw-w64-x86-64-dev \
-          wine
-        sudo apt upgrade
+          cmake make wine
+
     - name: Compile and run simple program
       run: |
         x86_64-w64-mingw32-g++-posix -std=c++17 test.cpp -O2 -Wall -Wextra -Wpedantic -Werror -static -o test_cxx17.exe
