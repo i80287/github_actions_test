@@ -45,10 +45,8 @@ jobs:
 
     - name: Run cmake
       run: |
-        mkdir -p cmake-build-tests && cd cmake-build-tests
-        cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo -D CMAKE_C_COMPILER=gcc -D CMAKE_CXX_COMPILER=g++ -S .. -B . && \
-          make all --jobs "$(nproc)" && \
-          env CTEST_OUTPUT_ON_FAILURE=1 make test
+        chmod +x run_gcc_tests.sh && ./run_gcc_tests.sh
+
 
   ubuntu-cmake-clang:
     name: test-on-ubuntu-${{ matrix.ubuntu_version }}
@@ -85,10 +83,7 @@ jobs:
 
     - name: Run cmake
       run: |
-        mkdir -p cmake-build-tests && cd cmake-build-tests
-        cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo -D CMAKE_C_COMPILER=clang -D CMAKE_CXX_COMPILER=clang++ -S .. -B . && \
-          make all --jobs "$(nproc)" && \
-          env CTEST_OUTPUT_ON_FAILURE=1 make test
+        chmod +x run_clang_tests.sh && ./run_clang_tests.sh
 
 
   ubuntu-cmake-gcc-mingw-w64-i686-posix:
@@ -121,10 +116,7 @@ jobs:
 
     - name: Run cmake
       run: |
-        mkdir -p cmake-build-tests && cd cmake-build-tests
-        cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo -D CMAKE_C_COMPILER=i686-w64-mingw32-gcc-posix -D CMAKE_CXX_COMPILER=i686-w64-mingw32-g++-posix -S .. -B . && \
-          make all --jobs "$(nproc)" && \
-          env CTEST_OUTPUT_ON_FAILURE=1 make test
+        chmod +x run_gcc_mingw_32_tests.sh && ./run_gcc_mingw_32_tests.sh
 
 
   ubuntu-cmake-gcc-mingw-w64-x86_64-posix:
@@ -157,7 +149,4 @@ jobs:
 
     - name: Run cmake
       run: |
-        mkdir -p cmake-build-tests && cd cmake-build-tests
-        cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo -D CMAKE_C_COMPILER=x86_64-w64-mingw32-gcc-posix -D CMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++-posix -S .. -B . && \
-          make all --jobs "$(nproc)" && \
-          env CTEST_OUTPUT_ON_FAILURE=1 make test
+        chmod +x run_gcc_mingw_64_tests.sh && ./run_gcc_mingw_64_tests.sh
