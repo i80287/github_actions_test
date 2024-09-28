@@ -68,7 +68,9 @@ jobs:
             clang --version
             clang++ --version
 
+            echo "executing `sudo ${{ matrix.os.add_pkg }} gmp mpfr cmake`"
             sudo ${{ matrix.os.add_pkg }} gmp mpfr cmake
+            echo "installed packages"
 
             clang++ test.cpp -std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -lpthread -o test_cxx17.out
             ./test_cxx17.out
