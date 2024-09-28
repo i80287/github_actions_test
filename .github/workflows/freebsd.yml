@@ -66,7 +66,7 @@ jobs:
             clang++ --version
 
             echo "installing packages"
-            sudo pkg -y install gmp mpfr cmake || sudo pkg_add -y gmp mpfr cmake
+            sudo pkg install -y gmp mpfr cmake || sudo pkg_add gmp mpfr cmake
             echo "installed packages"
 
             clang++ test.cpp -std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -lpthread -o test_cxx17.out
