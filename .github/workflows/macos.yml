@@ -26,7 +26,7 @@ jobs:
         brew update
         brew install gcc libtool make cmake
         export PATH="/opt/homebrew/opt/make/libexec/gnubin:/usr/local/lib:$PATH"
-        brew reinstall gmp@6.3.0 mpfr@6.3.0
+        brew reinstall gmp mpfr
         brew unlink gmp && brew link gmp
         brew unlink mpfr && brew link mpfr
         export LIBRARY_PATH="$LIBRARY_PATH:/opt/homebrew/lib:/usr/local/Cellar/gmp/6.3.0/lib:/usr/local/lib"
