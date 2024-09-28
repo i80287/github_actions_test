@@ -68,6 +68,8 @@ jobs:
             echo "installing packages"
             sudo pkg install -y gmp mpfr cmake || sudo pkg_add gmp mpfr cmake
             echo "installed packages"
+            find /usr/include /usr/lib /usr/local/include /usr/local/lib $HOME -name '*gmp*'
+            find /usr/include /usr/lib /usr/local/include /usr/local/lib $HOME -name '*mpfr*'
 
             clang++ test.cpp -std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -lpthread -o test_cxx17.out
             ./test_cxx17.out
