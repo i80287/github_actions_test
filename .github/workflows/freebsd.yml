@@ -18,6 +18,10 @@ jobs:
             architecture: x86-64
             version: '14.1'
 
+          - name: freebsd
+            architecture: arm64
+            version: '14.1'
+
           - name: openbsd
             architecture: x86-64
             version: '7.5'
