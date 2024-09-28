@@ -24,7 +24,7 @@ jobs:
             uname -a
             echo $SHELL
             pwd
-            ls -lah
+            ls -lhai
             whoami
             env | sort
             clang --version
