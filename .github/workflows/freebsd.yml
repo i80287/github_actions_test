@@ -64,7 +64,7 @@ jobs:
             clang --version
             clang++ --version
 
-            pkg install gmp gmpxx mpfr
+            sudo pkg install gmp gmpxx mpfr
 
             clang++ test.cpp -std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -lpthread -o test_cxx17.out
             ./test_cxx17.out
