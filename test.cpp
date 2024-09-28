@@ -6,10 +6,12 @@
 #include <ccomplex>
 #include <cctype>
 #include <cerrno>
+#include <cfenv>
 #include <cfloat>
 #include <charconv>
 #include <chrono>
 #include <cinttypes>
+#include <ciso646>
 #include <climits>
 #include <cmath>
 #include <complex>
@@ -42,6 +44,7 @@
 #include <unordered_set>
 #include <utility>
 #include <vector>
+#include <version>
 
 #if __cplusplus >= 202002L
 #include <concepts>
@@ -51,7 +54,8 @@
 
 #include "config_macros.hpp"
 
-#if !defined(__MINGW32__) && !defined(__MINGW64__)
+#if !defined(__MINGW32__) && !defined(__MINGW64__) && defined(__has_include) && \
+    __has_include(<gmp.h>) && __has_include(<gmpxx.h>) && __has_include(<mpfr.h>)
 
 #include <gmp.h>
 #include <gmpxx.h>
@@ -76,8 +80,9 @@ typedef std::_Signed128 int128_t;
 int main() {
     assert(true);
     static_assert(true);
-    puts("Hell");
+    std::puts("Hell");
     std::cout << "Hell" << std::endl;
-    std::thread t([]() noexcept { puts("Hello from some thread"); });
-    t.join();
+    std::thread([]() {
+        std::cout << "Hello from the thread " << std::this_thread::get_id() << '\n';
+    }).join();
 }

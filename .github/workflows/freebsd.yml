@@ -1,0 +1,46 @@
+name: FreeBSD CI
+
+on: [push, pull_request, workflow_dispatch]
+
+env:
+    UBSAN_OPTIONS: print_stacktrace=1
+
+jobs:
+
+  test:
+    name: test-freebsd-as-image-on-ubuntu
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Test
+      uses: cross-platform-actions/action@v0.25.0
+      with:
+        operating_system: freebsd
+        version: '14.0'
+        run: |
+            uname -a
+            echo $SHELL
+            pwd
+            ls -lah
+            whoami
+            env | sort
+            clang --verion
+            clang++ --version
+
+    - name: Compile and run simple program (c++17 full support)
+      run: |
+          clang++ test.cpp -std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror -lpthread -o test_cxx17.out
+          ./test_cxx17.out
+
+    - name: Compile and run simple c++20 program (c++20 partial support)
+      run: |
+          clang++ test.cpp -std=c++2a -O2 -Wall -Wextra -Wpedantic -Werror -lpthread -o test_cxx20.out
+          ./test_cxx20.out
+
+    - name: Compile and run simple c++20 program (c++20 full support)
+      run: |
+          clang++ test.cpp -std=c++20 -O2 -Wall -Wextra -Wpedantic -Werror -lpthread -o test_cxx20.out
+          ./test_cxx20.out
