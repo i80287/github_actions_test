@@ -26,7 +26,6 @@ jobs:
         brew update
         brew install gcc libtool make cmake gmp mpfr
         export PATH="/opt/homebrew/opt/make/libexec/gnubin:/usr/local/lib:$PATH"
-        alias nproc="sysctl -n hw.logicalcpu"
         brew link --force gmp
         brew link --force mpfr
 
@@ -47,4 +46,4 @@ jobs:
 
     - name: Run cmake
       run: |
-        chmod +x run_clang_tests.sh && ./run_clang_tests.sh
+        chmod +x run_clang_tests_macos.sh && ./run_clang_tests_macos.sh
