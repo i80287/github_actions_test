@@ -8,7 +8,7 @@ env:
 jobs:
 
   test:
-    name: test-freebsd-as-image-on-ubuntu
+    name: test-bsd-systems
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
