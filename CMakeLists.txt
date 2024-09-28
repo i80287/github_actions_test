@@ -235,7 +235,7 @@ function(
 
     set(target_cpp_filenames)
     file(TO_NATIVE_PATH "/" os_separator)
-    string(REPLACE " " ";" target_dir ${target_dir})
+    string(REPLACE " " ";" target_dir "${target_dir}")
     foreach(target_filename ${target_filenames})
         set(target_cpp_filename "${target_filename}.cpp")
         string(JOIN "${os_separator}" target_path_to_cpp ".." ${target_dir} ${target_cpp_filename})

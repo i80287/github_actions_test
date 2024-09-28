@@ -20,18 +20,22 @@ jobs:
           - name: freebsd
             architecture: x86-64
             version: '14.1'
+            pkg_manager: pkg
 
           - name: freebsd
             architecture: arm64
             version: '14.1'
+            pkg_manager: pkg
 
           - name: openbsd
             architecture: x86-64
             version: '7.5'
+            pkg_manager: pkg_add
 
           - name: openbsd
             architecture: arm64
             version: '7.5'
+            pkg_manager: pkg_add
 
           # - name: netbsd
           #   architecture: x86-64
@@ -64,7 +68,7 @@ jobs:
             clang --version
             clang++ --version
 
-            sudo pkg install gmp mpfr
+            sudo ${{ matrix.os.pkg_manager }} install gmp mpfr make cmake
 
             clang++ test.cpp -std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -lpthread -o test_cxx17.out
             ./test_cxx17.out
