@@ -26,6 +26,11 @@ jobs:
         sudo apt update
         sudo apt install gcc g++ build-essential cmake make libgmp-dev libmpfr-dev
 
+    - name: Install cppcheck
+      run: |
+        sudo apt update
+        sudo apt install cppcheck
+
     - name: Compile and run simple program (c++17 full support)
       run: |
         g++ test.cpp -std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -lpthread -o test_cxx17.out
@@ -63,6 +68,11 @@ jobs:
       run: |
         sudo apt update
         sudo apt install clang llvm cmake make libgmp-dev libmpfr-dev
+
+    - name: Install cppcheck
+      run: |
+        sudo apt update
+        sudo apt install cppcheck
 
     - name: Compile and run simple program (c++17 full support)
       run: |
