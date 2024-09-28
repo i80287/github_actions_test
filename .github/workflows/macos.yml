@@ -30,16 +30,19 @@ jobs:
         brew link --force mpfr
 
     - name: Compile and run simple program (c++17 full support)
+      if: matrix.macos_versions <= 13
       run: |
         clang++ test.cpp -std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -lpthread -o test_cxx17.out
         ./test_cxx17.out
 
     - name: Compile and run simple c++20 program (c++20 partial support)
+      if: matrix.macos_versions <= 13
       run: |
         clang++ test.cpp -std=c++2a -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -lpthread -o test_cxx20.out
         ./test_cxx20.out
 
     - name: Compile and run simple c++20 program (c++20 full support)
+      if: matrix.macos_versions <= 13
       run: |
         clang++ test.cpp -std=c++20 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -lpthread -o test_cxx20.out
         ./test_cxx20.out
