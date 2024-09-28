@@ -1,0 +1,46 @@
+name: macOS CI
+
+on: [push, pull_request, workflow_dispatch]
+
+permissions:
+  contents: read
+
+env:
+  UBSAN_OPTIONS: print_stacktrace=1
+
+jobs:
+
+  macOS-cmake-clang:
+    name: test-on-macOS-${{ matrix.macos_versions }}
+    runs-on: macos-${{ matrix.macos_versions }}
+    strategy:
+      fail-fast: false
+      matrix:
+        macos_versions: [12, 13, 14, 15]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: |
+        brew update
+        brew install gcc make cmake gmp mpfr
+
+    - name: Compile and run simple program (c++17 full support)
+      run: |
+        clang++ test.cpp -std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -lpthread -o test_cxx17.out
+        ./test_cxx17.out
+
+    - name: Compile and run simple c++20 program (c++20 partial support)
+      run: |
+        clang++ test.cpp -std=c++2a -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -lpthread -o test_cxx20.out
+        ./test_cxx20.out
+
+    - name: Compile and run simple c++20 program (c++20 full support)
+      run: |
+        clang++ test.cpp -std=c++20 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -lpthread -o test_cxx20.out
+        ./test_cxx20.out
+
+    - name: Run cmake
+      run: |
+        chmod +x run_clang_tests.sh && ./run_clang_tests.sh
