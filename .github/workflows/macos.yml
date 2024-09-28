@@ -25,7 +25,7 @@ jobs:
       run: |
         brew update
         brew install gcc libtool make cmake gmp mpfr
-        export PATH="/opt/homebrew/opt/make/libexec/gnubin:$PATH"
+        export PATH="/opt/homebrew/opt/make/libexec/gnubin:/usr/local/lib:$PATH"
         alias nproc="sysctl -n hw.logicalcpu"
         brew link --force gmp
         brew link --force mpfr
