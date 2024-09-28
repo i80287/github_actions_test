@@ -21,7 +21,11 @@
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
+
+#if !defined(__APPLE__)
 #include <cuchar>
+#endif
+
 #include <cwchar>
 #include <exception>
 #include <functional>
