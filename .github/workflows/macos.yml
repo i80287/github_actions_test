@@ -24,12 +24,11 @@ jobs:
     - name: Install dependencies
       run: |
         brew update
-        brew search gmp
-        brew search mpfr
-        brew install gcc make cmake gmp mpfr
+        brew install gcc libtool make cmake gmp mpfr
         brew link --force gmp
         brew link --force mpfr
         export PATH="/opt/homebrew/opt/make/libexec/gnubin:$PATH"
+        alias nproc="sysctl -n hw.logicalcpu"
 
     - name: Compile and run simple program (c++17 full support)
       run: |
