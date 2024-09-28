@@ -24,7 +24,8 @@ jobs:
     - name: Install dependencies
       run: |
         brew update
-        brew search gmp mpfr
+        brew search gmp
+        brew search mpfr
         brew install gcc make cmake gmp mpfr
         brew link --force gmp
         brew link --force mpfr
