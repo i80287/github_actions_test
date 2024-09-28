@@ -68,7 +68,7 @@ jobs:
             clang --version
             clang++ --version
 
-            sudo ${{ matrix.os.pkg_manager }} install gmp mpfr make cmake
+            sudo ${{ matrix.os.pkg_manager }} install gmp mpfr cmake
 
             clang++ test.cpp -std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -lpthread -o test_cxx17.out
             ./test_cxx17.out
