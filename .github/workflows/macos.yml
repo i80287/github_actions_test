@@ -24,9 +24,9 @@ jobs:
     - name: Install dependencies
       run: |
         brew update
-        brew uninstall gmp mpfr
-        brew install gcc libtool make cmake gmp mpfr
+        brew install gcc libtool make cmake
         export PATH="/opt/homebrew/opt/make/libexec/gnubin:/usr/local/lib:$PATH"
+        brew install --force gmp mpfr
         brew link --force gmp
         brew link --force mpfr
 
