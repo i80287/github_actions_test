@@ -25,10 +25,10 @@ jobs:
       run: |
         brew update
         brew install gcc libtool make cmake gmp mpfr
-        brew link --force gmp
-        brew link --force mpfr
         export PATH="/opt/homebrew/opt/make/libexec/gnubin:$PATH"
         alias nproc="sysctl -n hw.logicalcpu"
+        brew link --force gmp
+        brew link --force mpfr
 
     - name: Compile and run simple program (c++17 full support)
       run: |
