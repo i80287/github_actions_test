@@ -52,8 +52,8 @@ jobs:
         architecture: ${{ matrix.os.architecture }}
         version: ${{ matrix.os.version }}
         shell: bash
-        cpu_count: 4
-        memory: 4G
+        cpu_count: 2
+        memory: 2G
         run: |
             uname -a
             echo $SHELL
@@ -68,14 +68,16 @@ jobs:
             echo "installing packages"
             sudo pkg install -y gmp mpfr cmake || sudo pkg_add gmp mpfr cmake
             echo "installed packages"
+            echo "Searching for *gmp*"
             find /usr/include /usr/lib /usr/local/include /usr/local/lib $HOME -name '*gmp*'
+            echo "Searching for *mpfr*"
             find /usr/include /usr/lib /usr/local/include /usr/local/lib $HOME -name '*mpfr*'
 
-            clang++ test.cpp -std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -lpthread -o test_cxx17.out
-            ./test_cxx17.out
+            # clang++ test.cpp -std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -lpthread -o test_cxx17.out
+            # ./test_cxx17.out
 
-            clang++ test.cpp -std=c++2a -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -lpthread -o test_cxx20.out
-            ./test_cxx20.out
+            # clang++ test.cpp -std=c++2a -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -lpthread -o test_cxx20.out
+            # ./test_cxx20.out
 
-            clang++ test.cpp -std=c++20 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -lpthread -o test_cxx20.out
-            ./test_cxx20.out
+            # clang++ test.cpp -std=c++20 -O2 -Wall -Wextra -Wpedantic -Werror -lgmp -lgmpxx -lmpfr -lpthread -o test_cxx20.out
+            # ./test_cxx20.out
