@@ -89,4 +89,35 @@ int main() {
     std::thread([]() {
         std::cout << "Hello from the thread " << std::this_thread::get_id() << '\n';
     }).join();
+
+    using namespace std::literals;
+#if CONFIG_HAS_AT_LEAST_CXX_20 && defined(__GNUG__) && !defined(__clang__)
+    constexpr auto c = 1.0 + 1.0i;
+    static_assert(c.imag() == 1.0);
+#else
+    constexpr std::complex c{1.0, 1.0};
+    static_assert(c.imag() == 1.0, "");
+#endif
+
+    constexpr auto sv = "abc"sv;
+    static_assert(sv.size() == 3, "");
+
+#if CONFIG_HAS_AT_LEAST_CXX_20 && defined(__GNUG__) && !defined(__clang__)
+    static constexpr auto s = "abc"s;
+#else
+    static const auto s = "abc"s;
+#endif
+    assert(s.size() == 3);
+
+    constexpr auto time = 100ms;
+    static_assert(std::chrono::duration_cast<std::chrono::nanoseconds>(time).count() ==
+                      time.count() * 1'000'000,
+                  "");
+
+#if CONFIG_HAS_AT_LEAST_CXX_20
+    static constinit const std::bitset<64> set(uint64_t(-1));
+#else
+    static const std::bitset<64> set(uint64_t(-1));
+#endif
+    assert(set.all());
 }
