@@ -33,15 +33,15 @@ jobs:
         export INCLUDE_PATH="$INCLUDE_PATH:/opt/homebrew/include:/usr/local/Cellar/gmp/6.3.0/include:/usr/local/include"
 
         echo "Searching for *gmp*"
-        find /usr/include /usr/lib /usr/local/include /usr/local/lib $HOME -name '*gmp*'
+        find /usr/local/include /usr/local/lib $HOME -name '*gmp*'
         echo "Searching for *mpfr*"
-        find /usr/include /usr/lib /usr/local/include /usr/local/lib $HOME -name '*mpfr*'
+        find /usr/local/include /usr/local/lib $HOME -name '*mpfr*'
 
-    # - name: Compile and run simple program (c++17 full support)
-    #   if: matrix.macos_versions <= 13
-    #   run: |
-    #     clang++ test.cpp -std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror -lpthread -o test_cxx17.out
-    #     ./test_cxx17.out
+    - name: Compile and run simple program (c++17 full support)
+      if: matrix.macos_versions <= 13
+      run: |
+        clang++ test.cpp -std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror -I/usr/local/include -L/usr/local/lib -lpthread -lgmp -lgmpxx -o test_cxx17.out
+        ./test_cxx17.out
 
     # - name: Compile and run simple c++20 program (c++20 partial support)
     #   if: matrix.macos_versions <= 13
