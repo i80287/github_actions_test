@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.20)
 
 project(math_tests VERSION 0.1.0 LANGUAGES CXX)
 
@@ -9,13 +9,13 @@ set(USING_MSYS2_MINGW_GCC False)
 # other versions can be added below depending on the compiler version
 set(SUPPORTED_CXX_VERSIONS "17")
 
+string(TOLOWER ${CMAKE_CXX_COMPILER} STRING_LOWER_CMAKE_CXX_COMPILER)
 if (MINGW OR MSYS)
     set(USING_MINGW_GCC True)
     if((WIN32 AND NOT MSVC) OR MSYS)
         set(USING_MSYS2_MINGW_GCC True)
     endif()
 else()
-    string(TOLOWER ${CMAKE_CXX_COMPILER} STRING_LOWER_CMAKE_CXX_COMPILER)
     string(FIND ${STRING_LOWER_CMAKE_CXX_COMPILER} "mingw" pos)
     if (NOT pos EQUAL -1)
         set(USING_MINGW_GCC True)
@@ -42,7 +42,7 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND CMAKE_SYSTEM_NAME MATCHES "Linux")
             OUTPUT_STRIP_TRAILING_WHITESPACE
         )
 
-        string(REPLACE "\n" " " LSB_DISTRIBUTOR_ID_AND_RELEASE_VERSION_SHORT ${LSB_DISTRIBUTOR_ID_AND_RELEASE_VERSION_SHORT})
+        string(REPLACE "\n" " " LSB_DISTRIBUTOR_ID_AND_RELEASE_VERSION_SHORT "${LSB_DISTRIBUTOR_ID_AND_RELEASE_VERSION_SHORT}")
         separate_arguments(LSB_DISTRIBUTOR_ID_AND_RELEASE_VERSION_SHORT)
 
         list(GET LSB_DISTRIBUTOR_ID_AND_RELEASE_VERSION_SHORT 0 LSB_DISTRIBUTOR_ID_SHORT)
@@ -86,7 +86,7 @@ function(configure_gcc_or_clang_gcc_options)
         -Warray-bounds
         -Wformat=2
     )
-    if (NOT USING_MINGW_GCC)
+    if (NOT USING_MINGW_GCC AND NOT MSVC)
         set(LOCAL_FN_TEST_COMPILE_OPTIONS
             ${LOCAL_FN_TEST_COMPILE_OPTIONS}
             -fstack-protector-strong
@@ -101,6 +101,10 @@ function(configure_gcc_or_clang_gcc_options)
             -Wduplicated-cond)
     endif()
     if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+        set(LOCAL_FN_TEST_COMPILE_OPTIONS
+            ${LOCAL_FN_TEST_COMPILE_OPTIONS}
+            -Wno-c++98-compat
+        )
         set(LOCAL_FN_TEST_COMPILE_DEFINITIONS
             ${LOCAL_FN_TEST_COMPILE_DEFINITIONS}
             _LIBCPP_ENABLE_ASSERTIONS=1)
@@ -123,17 +127,53 @@ function(configure_gcc_or_clang_gcc_options)
         ${LOCAL_FN_TEST_COMPILE_DEFINITIONS}
         PARENT_SCOPE)
 
-    if (NOT USING_MINGW_GCC)
+    if (NOT USING_MINGW_GCC AND NOT MSVC)
         set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -fsanitize=address,undefined PARENT_SCOPE)
     endif()
 
-endfunction()
+endfunction(configure_gcc_or_clang_gcc_options)
 
-if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    if (CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "MSVC")
-    elseif (CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "GNU")
-        configure_gcc_or_clang_gcc_options()
-    elseif (CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "AppleClang")
+function(configure_msvc_or_clang_msvc_options)
+    set(LOCAL_FN_TEST_COMPILE_OPTIONS
+        ${TEST_COMPILE_OPTIONS})
+    set(LOCAL_FN_TEST_COMPILE_DEFINITIONS
+        ${TEST_COMPILE_DEFINITIONS})
+
+    set(LOCAL_FN_TEST_COMPILE_DEFINITIONS
+        ${LOCAL_FN_TEST_COMPILE_DEFINITIONS}
+        _CRT_SECURE_NO_WARNINGS=1)
+
+    if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    else()
+        if (MSVC AND MSVC_VERSION GREATER_EQUAL 1914)
+            set(LOCAL_FN_TEST_COMPILE_OPTIONS
+                ${LOCAL_FN_TEST_COMPILE_OPTIONS}
+                "/Zc:__cplusplus")
+        endif()
+        set(LOCAL_FN_TEST_COMPILE_OPTIONS
+            ${LOCAL_FN_TEST_COMPILE_OPTIONS}
+            "/Wall"
+            "/UNDEBUG")
+    endif()
+
+    set(TEST_COMPILE_OPTIONS
+        ${LOCAL_FN_TEST_COMPILE_OPTIONS}
+        PARENT_SCOPE)
+    set(TEST_COMPILE_DEFINITIONS
+        ${LOCAL_FN_TEST_COMPILE_DEFINITIONS}
+        PARENT_SCOPE)
+endfunction(configure_msvc_or_clang_msvc_options)
+
+
+# https://en.cppreference.com/w/cpp/compiler_support
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
+    if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+        if (CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "MSVC")
+            configure_msvc_or_clang_msvc_options()
+            configure_gcc_or_clang_gcc_options()
+        elseif (CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "GNU")
+            configure_gcc_or_clang_gcc_options()
+        endif()
     endif()
 
     if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 10.0.0)
@@ -145,7 +185,6 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.0.0)
         list(APPEND SUPPORTED_CXX_VERSIONS 26)
     endif()
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     configure_gcc_or_clang_gcc_options()
     if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 10.0.0)
@@ -159,6 +198,13 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     endif()
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    configure_msvc_or_clang_msvc_options()
+    if (MSVC_VERSION GREATER_EQUAL 1928)
+        list(APPEND SUPPORTED_CXX_VERSIONS 20)
+    endif()
+    if (MSVC_VERSION GREATER_EQUAL 1937)
+        list(APPEND SUPPORTED_CXX_VERSIONS 23)
+    endif()
 endif()
 
 
@@ -236,14 +282,13 @@ function(
     target_optional_dependencies
     target_cxx_version
 )
-    string(REPLACE " " ";" target_filenames ${target_filenames})
+    string(REPLACE " " ";" target_filenames "${target_filenames}")
 
     set(target_cpp_filenames)
-    file(TO_NATIVE_PATH "/" os_separator)
     string(REPLACE " " ";" target_dir "${target_dir}")
     foreach(target_filename ${target_filenames})
         set(target_cpp_filename "${target_filename}.cpp")
-        string(JOIN "${os_separator}" target_path_to_cpp ".." ${target_dir} ${target_cpp_filename})
+        string(JOIN "/" target_path_to_cpp ".." ${target_dir} ${target_cpp_filename})
         list(APPEND target_cpp_filenames ${target_path_to_cpp})
     endforeach()
 
@@ -252,12 +297,12 @@ function(
 
     string(COMPARE EQUAL "${target_dependencies}" "" empty_dependencies)
     if (NOT empty_dependencies)
-        string(REPLACE " " ";" target_dependencies ${target_dependencies})
+        string(REPLACE " " ";" target_dependencies "${target_dependencies}")
     endif()
 
     string(COMPARE EQUAL "${target_optional_dependencies}" "" empty_optional_dependencies)
     if (NOT empty_optional_dependencies)
-        string(REPLACE " " ";" target_optional_dependencies ${target_optional_dependencies})
+        string(REPLACE " " ";" target_optional_dependencies "${target_optional_dependencies}")
     endif()
 
     message(STATUS "+-")
@@ -320,7 +365,7 @@ foreach(target_filenames target_dir target_supported_cxx_versions target_depende
         TestCxxVersions
         TestDependencies
         TestOptionalDependencies)
-    string(REPLACE " " ";" target_supported_cxx_versions ${target_supported_cxx_versions})
+    string(REPLACE " " ";" target_supported_cxx_versions "${target_supported_cxx_versions}")
     foreach(version ${SUPPORTED_CXX_VERSIONS})
         if (${version} IN_LIST target_supported_cxx_versions)
             add_test_target(

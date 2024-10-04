@@ -1,0 +1,28 @@
+name: Windows CI
+
+on: [push, pull_request, workflow_dispatch]
+
+permissions:
+  contents: read
+
+jobs:
+
+  ubuntu-cmake-clang:
+    name: test-on-ubuntu-${{ matrix.ubuntu_version }}
+    runs-on: ubuntu-${{ matrix.ubuntu_version }}
+    strategy:
+      fail-fast: true
+      matrix:
+        ubuntu_version: [20.04, 22.04, 24.04]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v2
+      with:
+        msbuild-architecture: x64
+
+    - name: Build sample
+      run: |
+        .\run_msvc_tests.bat
