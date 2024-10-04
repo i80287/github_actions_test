@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(math_tests VERSION 0.1.0 LANGUAGES CXX)
+project(tests VERSION 0.1.0 LANGUAGES CXX)
 
 set(USING_MINGW_GCC False)
 set(USING_MINGW_GCC_32 False)
