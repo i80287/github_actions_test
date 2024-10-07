@@ -27,6 +27,7 @@
 #include <cuchar>
 #endif
 
+#include <cstdlib>
 #include <cwchar>
 #include <exception>
 #include <functional>
@@ -64,6 +65,12 @@
 #include <ctgmath>
 #endif
 
+#ifdef __linux__
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+#endif
+
 #if !defined(__MINGW32__) && !defined(__MINGW64__) && defined(__has_include) && \
     __has_include(<gmp.h>) && __has_include(<gmpxx.h>) && __has_include(<mpfr.h>)
 
@@ -88,13 +95,40 @@ typedef std::_Signed128 int128_t;
 #endif
 
 int main(int, const char* const[]) {
+    std::at_quick_exit([]() { std::cout << "at_quick_exit callback\n"; });
+    std::atexit([]() { std::cout << "atexit callback\n"; });
+
+#ifdef __linux__
+    const pid_t child_pid = fork();
+    switch (child_pid) {
+        case 0:
+            printf("Hello from child %d\n", getpid());
+            std::exit(0);
+        case -1:
+            std::terminate();
+        default:
+            if (waitpid(child_pid, nullptr, 0) == -1) {
+                std::perror("waitpid");
+                std::terminate();
+            }
+    }
+#endif
+
     assert(true);
     static_assert(true);
+
     std::puts("Hell");
     std::cout << "Hell" << std::endl;
+
     std::thread([]() {
         std::cout << "Hello from the thread " << std::this_thread::get_id() << '\n';
     }).join();
+
+#if CONFIG_HAS_AT_LEAST_CXX_20
+    std::jthread([]() {
+        std::cout << "Hello from the jthread " << std::this_thread::get_id() << '\n';
+    }).join();
+#endif
 
     using namespace std::literals;
 #if CONFIG_HAS_AT_LEAST_CXX_20 && defined(__GNUG__) && !defined(__clang__)
@@ -122,6 +156,9 @@ int main(int, const char* const[]) {
 
 #if CONFIG_HAS_AT_LEAST_CXX_20
     static constinit const std::bitset<64> set(uint64_t(-1));
+    static constinit thread_local const int some1[] = {1, 2, 3, 4, 5, 6, 7, 8};
+    static constexpr int some2[]                    = {1, 2, 3, 4, 5, 6, 7, 8};
+    assert(std::ranges::equal(some1, some2));
 #else
     static const std::bitset<64> set(uint64_t(-1));
 #endif
