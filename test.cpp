@@ -1,9 +1,11 @@
+#include "config_macros.hpp"
+
+
 #include <algorithm>
 #include <array>
 #include <atomic>
 #include <bitset>
 #include <cassert>
-#include <ccomplex>
 #include <cctype>
 #include <cerrno>
 #include <cfenv>
@@ -50,13 +52,18 @@
 #include <vector>
 #include <version>
 
-#if __cplusplus >= 202002L
+#if CONFIG_HAS_AT_LEAST_CXX_20
 #include <concepts>
 #include <numbers>
 #include <ranges>
 #endif
 
-#include "config_macros.hpp"
+#if !CONFIG_HAS_AT_LEAST_CXX_17
+#include <ccomplex>
+#include <cstdalign>
+#include <cstdbool>
+#include <ctgmath>
+#endif
 
 #if !defined(__MINGW32__) && !defined(__MINGW64__) && defined(__has_include) && \
     __has_include(<gmp.h>) && __has_include(<gmpxx.h>) && __has_include(<mpfr.h>)
