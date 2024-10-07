@@ -95,8 +95,16 @@ typedef std::_Signed128 int128_t;
 #endif
 
 int main(int, const char* const[]) {
-    std::at_quick_exit([]() { std::cout << "at_quick_exit callback\n"; });
-    std::atexit([]() { std::cout << "atexit callback\n"; });
+    std::at_quick_exit([]() noexcept { std::printf("at_quick_exit callback\n"); });
+    std::atexit([]() noexcept { std::printf("atexit callback\n"); });
+
+#ifdef __linux__
+    on_exit(
+        [](int status, void* arg) noexcept {
+            std::printf("on_exit callback, status = %d, arg = %p\n", status, arg);
+        },
+        /*arg =*/reinterpret_cast<void*>(std::uintptr_t{0x12345678ABCDEFull}));
+#endif
 
 #ifdef __linux__
     const pid_t child_pid = fork();
