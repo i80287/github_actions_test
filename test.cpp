@@ -150,11 +150,7 @@ int main(int, const char* const[]) {
     constexpr auto sv = "abc"sv;
     static_assert(sv.size() == 3, "");
 
-#if CONFIG_HAS_AT_LEAST_CXX_20 && defined(__GNUG__) && !defined(__clang__)
-    static constexpr auto s = "abc"s;
-#else
     static const auto s = "abc"s;
-#endif
     assert(s.size() == 3);
 
     constexpr auto time = 100ms;

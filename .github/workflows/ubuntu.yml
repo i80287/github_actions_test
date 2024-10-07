@@ -1,6 +1,13 @@
 name: Ubuntu CI
 
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+    branches:
+    - main
+  # pull_request:
+  #   branches:
+  #   - main
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -9,6 +16,19 @@ env:
   UBSAN_OPTIONS: print_stacktrace=1
 
 jobs:
+  ubuntu-ga-test:
+    runs-on: ubuntu-24.04
+    steps:
+    - name: Show disk space at start
+      run: df -h
+    - name: Free up disk space
+      run: sudo rm -rf /usr/local/lib/android
+    - name: Show disk space after freeing up
+      run: df -h
+    - name: list local libs
+      run: |
+        ls -lhai /usr/lib
+        ls -lhai /usr/local/lib
 
   ubuntu-cmake-gcc:
     name: test-on-ubuntu-${{ matrix.ubuntu_version }}
