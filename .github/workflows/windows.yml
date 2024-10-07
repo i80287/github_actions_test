@@ -4,7 +4,7 @@ name: Windows CI
 on:
   workflow_dispatch:
   pull_request:
-    types: [closed]
+    types: [opened, edited, closed]
 
 permissions:
   contents: read
@@ -12,7 +12,7 @@ permissions:
 jobs:
 
   ubuntu-cmake-clang:
-    if: github.event.pull_request.merged == true
+    # if: github.event.pull_request.merged == true
     name: test-on-windows
     runs-on: windows-latest
     strategy:

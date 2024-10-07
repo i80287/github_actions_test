@@ -1,6 +1,3 @@
-#include "config_macros.hpp"
-
-
 #include <algorithm>
 #include <array>
 #include <atomic>
@@ -23,6 +20,8 @@
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
+
+#include "config_macros.hpp"
 
 #if !defined(__APPLE__)
 #include <cuchar>
@@ -88,7 +87,7 @@ typedef std::_Signed128 int128_t;
 
 #endif
 
-int main() {
+int main(int, const char* const[]) {
     assert(true);
     static_assert(true);
     std::puts("Hell");
