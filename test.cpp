@@ -95,7 +95,9 @@ typedef std::_Signed128 int128_t;
 #endif
 
 int main(int, const char* const[]) {
+#ifndef __MINGW32__
     std::at_quick_exit([]() noexcept { std::printf("at_quick_exit callback\n"); });
+#endif
     std::atexit([]() noexcept { std::printf("atexit callback\n"); });
 
 #ifdef __linux__
